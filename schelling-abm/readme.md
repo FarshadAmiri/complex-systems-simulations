@@ -67,5 +67,5 @@ How do individual preferences regarding neighbors cause emergent segregation in 
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/schelling-abm.git
+git clone https://github.com/FarshadAmiri/ComplexSystems_playground/
 cd schelling-abm
