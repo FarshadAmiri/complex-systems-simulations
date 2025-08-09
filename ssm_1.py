@@ -5,7 +5,9 @@ import matplotlib.colors as mcolors
 
 # Parameters
 grid_size = 50
-populations = [0.25, 0.25, 0.25]
+populations = [0.1, 0.1, 0.4]  # what remains from 1.0 will be empty cells
+# First color denotes empty cells, the rest are the groups respectively
+colors = ['white', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta']  
 tolerance = 0.3
 max_iters = 200
 
@@ -95,11 +97,11 @@ def update(frame_num, img, grid, tolerance):
     return img,
 
 def main():
+    global colors
     grid = initialize_grid(grid_size, populations)
     
     fig, ax = plt.subplots()
     
-    colors = ['white', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta']
     num_colors = len(populations) + 1
     if num_colors > len(colors):
         import matplotlib.cm as cm
