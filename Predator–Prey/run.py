@@ -1,11 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-import time
 import random
 
 """
 Predator–Prey dynamic complex system simulation
+
+Colors mapping in the visualization:
+- White ("white") — Empty cells (no agent)
+- Green ("green") — Prey agents
+- Red ("red") — Predator agents
 
 - How it works:
 
@@ -13,13 +17,22 @@ Predator–Prey dynamic complex system simulation
 * Predators seek prey in adjacent cells.
 * If they find prey → they eat it, reset hunger, and may reproduce.
 * If they don’t eat → hunger decreases until they starve.
+* If predator eats prey in a step: hunger resets to max (starve time), because it just fed.
+* If predator does NOT eat in a step: hunger decreases by 1 (getting hungrier).
+* When hunger reaches zero → predator dies.
 * Toroidal grid — edges wrap around so agents reappear on the opposite side.
 * Visualization updates every iteration so you can watch the dynamics unfold.
 
-Colors mapping in the visualization:
-- White ("white") — Empty cells (no agent)
-- Green ("green") — Prey agents
-- Red ("red") — Predator agents
+- Updates:
+* Predators hunt prey within a Manhattan distance (radius) of 2 instead of just adjacent cells.
+* Predators move directly onto prey cells to eat.
+* If multiple prey are in range, predator picks one randomly.
+* Predators move only once per step.
+
+* Starvation kills predator correctly.
+* Prey still move randomly and reproduce.
+
+
 
 This is an agent-based simulation, so you’ll see predators and prey moving, eating, and reproducing step-by-step.
 """
@@ -29,111 +42,171 @@ This is an agent-based simulation, so you’ll see predators and prey moving, ea
 
 
 
-# Parameters
-grid_size = 50
-num_prey = 50
-num_predators = 200
-prey_reproduce_prob = 0.1      # chance prey reproduces each step
-predator_reproduce_prob = 0.05 # chance predator reproduces after eating
-predator_starve_time = 5       # steps before predator dies without food
-max_iters = 300
-delay = 0.1  # seconds between iterations
-
-# States
+# Constants for cell states
 EMPTY = 0
 PREY = 1
 PREDATOR = 2
 
-# Initialize grid
-grid = np.zeros((grid_size, grid_size), dtype=int)
+class Agent:
+    def __init__(self, x, y, env):
+        self.x = x
+        self.y = y
+        self.env = env
+    
+    def step(self):
+        raise NotImplementedError()
 
-# Track predator hunger (parallel array)
-hunger = np.zeros((grid_size, grid_size), dtype=int)
+class Prey(Agent):
+    reproduce_prob = 0.1
 
-# Randomly place prey
-for _ in range(num_prey):
-    x, y = np.random.randint(0, grid_size, 2)
-    grid[x, y] = PREY
+    def step(self):
+        # Move to random empty adjacent cell if possible
+        empty_neighbors = self.env.get_adjacent_cells(self.x, self.y, state=EMPTY)
+        if empty_neighbors:
+            nx, ny = random.choice(empty_neighbors)
+            self.env.move_agent(self, nx, ny)
+        # Reproduce with some probability in adjacent empty cell
+        if random.random() < Prey.reproduce_prob:
+            empty_neighbors = self.env.get_adjacent_cells(self.x, self.y, state=EMPTY)
+            if empty_neighbors:
+                rx, ry = random.choice(empty_neighbors)
+                self.env.add_agent(Prey(rx, ry, self.env))
 
-# Randomly place predators
-for _ in range(num_predators):
-    x, y = np.random.randint(0, grid_size, 2)
-    grid[x, y] = PREDATOR
-    hunger[x, y] = predator_starve_time
+class Predator(Agent):
+    reproduce_prob = 0.05
+    starve_time = 20
+    hunting_radius = 8
 
-# Color map
-cmap = mcolors.ListedColormap(["white", "green", "red"])
-bounds = [EMPTY, PREY, PREDATOR, PREDATOR + 1]
-norm = mcolors.BoundaryNorm(bounds, cmap.N)
+    def __init__(self, x, y, env):
+        super().__init__(x, y, env)
+        self.hunger = Predator.starve_time
+        self.ate_this_turn = False
 
-# Movement offsets
-moves = [(-1,0), (1,0), (0,-1), (0,1)]
+    def step(self):
+        self.ate_this_turn = False
+        # Look for prey within hunting radius
+        prey_cells = self.env.get_cells_in_radius(self.x, self.y, Predator.hunting_radius, state=PREY)
+        if prey_cells:
+            # Hunt random prey
+            target = random.choice(prey_cells)
+            self.env.remove_agent_at(*target)  # Eat prey
+            self.env.move_agent(self, *target)
+            self.hunger = Predator.starve_time
+            self.ate_this_turn = True
+            # Reproduce in old position with probability
+            if random.random() < Predator.reproduce_prob:
+                self.env.add_agent(Predator(self.x, self.y, self.env))
+        else:
+            # Move to empty adjacent cell if possible
+            empty_neighbors = self.env.get_adjacent_cells(self.x, self.y, state=EMPTY)
+            if empty_neighbors:
+                nx, ny = random.choice(empty_neighbors)
+                self.env.move_agent(self, nx, ny)
+            # Lose hunger if did not eat
+            self.hunger -= 1
+            if self.hunger <= 0:
+                self.env.remove_agent(self)
 
-plt.ion()
-fig, ax = plt.subplots()
+class Environment:
+    def __init__(self, size, initial_prey, initial_predators):
+        self.size = size
+        self.grid = np.zeros((size, size), dtype=int)
+        self.agents = []
+        self.agent_map = {}  # (x,y) -> agent for quick lookup
 
-for step in range(max_iters):
-    new_grid = grid.copy()
-    new_hunger = hunger.copy()
+        # Place initial prey
+        self.populate_agents(Prey, initial_prey)
+        # Place initial predators
+        self.populate_agents(Predator, initial_predators)
 
-    # Shuffle coordinates to avoid directional bias
-    coords = [(x, y) for x in range(grid_size) for y in range(grid_size)]
-    random.shuffle(coords)
+    def populate_agents(self, agent_cls, count):
+        placed = 0
+        while placed < count:
+            x, y = np.random.randint(0, self.size, 2)
+            if self.grid[x, y] == EMPTY:
+                agent = agent_cls(x, y, self)
+                self.add_agent(agent)
+                placed += 1
 
-    for x, y in coords:
-        if grid[x, y] == PREY:
-            # Move prey randomly if empty space
-            dx, dy = random.choice(moves)
-            nx, ny = (x + dx) % grid_size, (y + dy) % grid_size
-            if grid[nx, ny] == EMPTY:
-                new_grid[nx, ny] = PREY
-                new_grid[x, y] = EMPTY
-                # Reproduce
-                if random.random() < prey_reproduce_prob:
-                    new_grid[x, y] = PREY
+    def add_agent(self, agent):
+        self.agents.append(agent)
+        self.grid[agent.x, agent.y] = PREY if isinstance(agent, Prey) else PREDATOR
+        self.agent_map[(agent.x, agent.y)] = agent
 
-        elif grid[x, y] == PREDATOR:
-            # Predator tries to move to prey first
-            ate = False
-            for dx, dy in moves:
-                nx, ny = (x + dx) % grid_size, (y + dy) % grid_size
-                if grid[nx, ny] == PREY:
-                    new_grid[nx, ny] = PREDATOR
-                    new_hunger[nx, ny] = predator_starve_time
-                    new_grid[x, y] = EMPTY
-                    ate = True
-                    # Reproduce after eating
-                    if random.random() < predator_reproduce_prob:
-                        new_grid[x, y] = PREDATOR
-                        new_hunger[x, y] = predator_starve_time
-                    break
+    def remove_agent(self, agent):
+        self.grid[agent.x, agent.y] = EMPTY
+        self.agent_map.pop((agent.x, agent.y), None)
+        if agent in self.agents:
+            self.agents.remove(agent)
 
-            if not ate:
-                # Move to empty space
-                dx, dy = random.choice(moves)
-                nx, ny = (x + dx) % grid_size, (y + dy) % grid_size
-                if grid[nx, ny] == EMPTY:
-                    new_grid[nx, ny] = PREDATOR
-                    new_hunger[nx, ny] = hunger[x, y] - 1
-                    new_grid[x, y] = EMPTY
-                else:
-                    new_hunger[x, y] -= 1
+    def remove_agent_at(self, x, y):
+        agent = self.agent_map.get((x, y))
+        if agent:
+            self.remove_agent(agent)
 
-                # Starvation check
-                if new_hunger[nx, ny] <= 0:
-                    new_grid[nx, ny] = EMPTY
-                    new_hunger[nx, ny] = 0
+    def move_agent(self, agent, new_x, new_y):
+        # Remove old position
+        self.grid[agent.x, agent.y] = EMPTY
+        self.agent_map.pop((agent.x, agent.y), None)
 
-    grid = new_grid
-    hunger = new_hunger
+        # Update agent coords
+        agent.x, agent.y = new_x, new_y
 
-    # Visualization
-    ax.clear()
-    ax.imshow(grid, cmap=cmap, norm=norm)
-    ax.set_title(f"Predator–Prey Simulation (Step {step})")
-    ax.axis("off")
-    plt.draw()
-    plt.pause(delay)
+        # Update grid and map
+        self.grid[new_x, new_y] = PREY if isinstance(agent, Prey) else PREDATOR
+        self.agent_map[(new_x, new_y)] = agent
 
-plt.ioff()
-plt.show()
+    def get_adjacent_cells(self, x, y, state=None):
+        candidates = []
+        for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]:
+            nx, ny = (x + dx) % self.size, (y + dy) % self.size
+            if state is None or self.grid[nx, ny] == state:
+                candidates.append((nx, ny))
+        return candidates
+
+    def get_cells_in_radius(self, x, y, radius, state=None):
+        positions = []
+        for dx in range(-radius, radius+1):
+            for dy in range(-radius, radius+1):
+                if abs(dx) + abs(dy) <= radius:
+                    nx, ny = (x + dx) % self.size, (y + dy) % self.size
+                    if (dx !=0 or dy !=0):
+                        if state is None or self.grid[nx, ny] == state:
+                            positions.append((nx, ny))
+        return positions
+
+    def step(self):
+        # Shuffle agents to randomize action order
+        random.shuffle(self.agents)
+        # Use a copy since agents can be removed during iteration
+        for agent in self.agents[:]:
+            agent.step()
+
+class Simulation:
+    def __init__(self, grid_size=50, num_prey=400, num_predators=50, max_iters=200, delay=0.1):
+        self.env = Environment(grid_size, num_prey, num_predators)
+        self.max_iters = max_iters
+        self.delay = delay
+        self.cmap = mcolors.ListedColormap(["white", "green", "red"])
+        self.bounds = [EMPTY, PREY, PREDATOR, PREDATOR+1]
+        self.norm = mcolors.BoundaryNorm(self.bounds, self.cmap.N)
+
+    def run(self):
+        plt.ion()
+        fig, ax = plt.subplots(figsize=(6,6))
+
+        for step in range(self.max_iters):
+            self.env.step()
+            ax.clear()
+            ax.imshow(self.env.grid, cmap=self.cmap, norm=self.norm)
+            ax.set_title(f"Predator–Prey Simulation (Step {step+1})")
+            ax.axis('off')
+            plt.draw()
+            plt.pause(self.delay)
+
+        plt.ioff()
+        plt.show()
+
+if __name__ == "__main__":
+    sim = Simulation()
+    sim.run()
