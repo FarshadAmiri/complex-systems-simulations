@@ -16,7 +16,7 @@ grid_size = 50
 # - Values must sum to ≤ 1.0. Remaining fraction will be empty cells.
 # - You can define as many groups as you like by adding more values.
 # Example: [0.3, 0.4, 0.2] → 30% Group 1, 40% Group 2, 20% Group 3, and 10% empty.
-populations = [0.15, 0.45]
+populations = [0.25, 0.4]
 
 # Colors assigned to each category in the simulation.
 # - The FIRST color is reserved for empty cells.
@@ -29,7 +29,7 @@ colors = ['white', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan',
 # - Fraction of neighbors that must be of the same group for an agent to be "happy" and try not to relocate.
 # - Range: 0.0 (very tolerant) to 1.0 (very intolerant).
 # - Higher values → stronger segregation.
-tolerance = 0.6
+tolerance = 0.4
 
 # Maximum number of simulation iterations before stopping.
 max_iters = 500
