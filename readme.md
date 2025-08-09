@@ -5,3 +5,5 @@ Each subfolder contains an independent simulation with its own configuration and
 
 ## Contents
 - **Schelling Segregation Model** – How local preferences create large-scale patterns.
+- **Predator-Prey Simulation** – Predator–Prey dynamic complex system simulation.
+
