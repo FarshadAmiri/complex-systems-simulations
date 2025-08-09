@@ -2,7 +2,6 @@
 
 This repository contains a modular, object-oriented predator-prey simulation implemented in Python. It models the interactions of two species—predators and prey—on a 2D toroidal grid using agent-based modeling (ABM) principles. The simulation provides real-time visualization of complex emergent behaviors such as population dynamics, hunting, reproduction, and starvation.
 
----
 
 ## Overview
 
@@ -17,7 +16,6 @@ Agent-Based Modeling (ABM) is a powerful computational approach to simulate comp
 - **Starvation:** Predators have limited hunger capacity and die if they fail to eat within a given time.
 - **Real-Time Visualization:** The simulation displays the grid dynamically using `matplotlib`, with distinct colors representing empty cells, prey, and predators.
 
----
 
 ## Simulation Components
 
@@ -38,7 +36,6 @@ Agent-Based Modeling (ABM) is a powerful computational approach to simulate comp
 - Updates agents in randomized order to avoid bias.
 - Visualizes the system state at each timestep.
 
----
 
 ## Usage
 
