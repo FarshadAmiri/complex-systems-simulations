@@ -5,11 +5,12 @@ import matplotlib.colors as mcolors
 
 # Parameters
 grid_size = 50
-populations = [0.1, 0.1, 0.4]  # what remains from 1.0 will be empty cells
-# First color denotes empty cells, the rest are the groups respectively
+populations = [0.4, 0.3, ]  # what remains from 1.0 will be empty cells
+# First color denotes empty cells, the rest denotes the groups respectively
 colors = ['white', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta']  
-tolerance = 0.3
-max_iters = 200
+tolerance = 0.6
+
+max_iters = 500
 
 EMPTY = 0
 GROUP_IDS = list(range(1, len(populations) + 1))
