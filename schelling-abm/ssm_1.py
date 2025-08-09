@@ -5,15 +5,15 @@ import matplotlib.colors as mcolors
 
 # Parameters
 grid_size = 50
-populations = [0.4, 0.3, ]  # what remains from 1.0 will be empty cells
+populations = [0.3, 0.3, ]  # what remains from 1.0 will be empty cells
 # First color denotes empty cells, the rest denotes the groups respectively
 colors = ['white', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta']  
-tolerance = 0.6
-
+tolerance = 0.4
 max_iters = 500
 
 EMPTY = 0
 GROUP_IDS = list(range(1, len(populations) + 1))
+
 
 def initialize_grid(size, populations):
     total_cells = size * size
@@ -126,3 +126,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+

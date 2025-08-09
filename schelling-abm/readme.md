@@ -1,70 +1,66 @@
-# Schelling's Segregation Model — Generative Agent-Based Modeling
+# Schelling’s Segregation Model — A Generative Agent-Based Simulation
 
 ## Overview
 
-This project implements **Schelling's Segregation Model**, a classic example of **generative agent-based modeling (ABM)** that demonstrates how simple individual preferences can lead to emergent, large-scale patterns of residential segregation.
+This repository contains a Python implementation of **Schelling’s Segregation Model**, a foundational example in **generative agent-based modeling (ABM)**. The model demonstrates how simple individual preferences can collectively generate complex, emergent patterns of residential segregation without centralized coordination.
 
-Agents of different groups (e.g., ethnicities) occupy a grid representing a neighborhood. Each agent prefers a minimum fraction of neighbors similar to itself. If this preference is not met, the agent relocates to an empty spot. Over time, these micro-level decisions generate macro-level segregation patterns without any centralized control.
+Agents representing different groups occupy cells on a grid, each evaluating their local neighborhood and deciding whether to relocate based on a tolerance threshold for similar neighbors. Through iterative relocation, distinct clusters and segregated communities naturally emerge.
 
----
-
-## What is Generative Agent-Based Modeling?
-
-Generative ABM refers to models where:
-
-- Agents possess simple rules to **generate their own behaviors autonomously** based on local information.
-- Complex system-wide patterns **emerge naturally** from these interactions.
-- The modeler does not hard-code global outcomes; instead, agents’ micro-decisions **generate** the observed phenomena.
-
-Schelling’s model is generative because each agent independently decides whether to move, and these individual choices collectively produce the emergent segregation patterns.
+![Schelling’s Segregation](schelling_sim.gif)
 
 ---
 
-## Problem Statement
+## Key Concepts
 
-How do individual preferences regarding neighbors cause emergent segregation in urban environments?
+### Generative Agent-Based Modeling
 
-- Agents want to live near similar agents.
-- Even mild preferences can lead to significant clustering and segregation.
-- The model shows segregation can arise without overt discrimination.
+- **Generative modeling** focuses on reproducing complex system-level phenomena by specifying simple, local agent behaviors.
+- Agents autonomously generate actions based on local information, leading to emergent macro-level patterns.
+- Schelling’s model exemplifies this paradigm by illustrating how micro-level preferences induce macro segregation.
+
+### The Schelling Model Problem
+
+- How do individual preferences about neighbors lead to spatial segregation?
+- Even modest preferences for similar neighbors can result in significant clustering.
+- The model underscores how segregation can arise without explicit discriminatory intent.
 
 ---
 
 ## Model Description
 
-### Grid
+### Environment
 
-- A 2D square grid represents the neighborhood.
-- Each cell may be occupied by an agent from one of several groups or be empty.
+- **Grid:** A two-dimensional square lattice representing the residential area.
+- **Cells:** Each cell may be empty or occupied by an agent belonging to one of multiple groups.
 
 ### Agents
 
-- Assigned to groups (e.g., Red, Blue, Green), identified by integers.
-- Agents have no global view; they only observe their local neighbors.
+- **Groups:** Agents are categorized by group membership (e.g., ethnicity), each assigned a unique integer identifier.
+- **Local View:** Agents perceive only their immediate neighbors (Moore neighborhood — up to 8 adjacent cells).
+- **Satisfaction Criterion:** Agents are satisfied if the fraction of similar neighbors meets or exceeds a tolerance threshold.
 
-### Key Variables & Parameters
+### Parameters
 
-| Variable / Parameter      | Description                                             |
-|--------------------------|---------------------------------------------------------|
-| `grid_size`              | Size of the square grid (e.g., 50x50 cells)             |
-| `populations`            | List of fractions representing relative size of each agent group (e.g., `[0.3, 0.5, 0.2]`) |
-| `EMPTY`                  | Integer representing empty cells (default 0)            |
-| `tolerance`              | Minimum fraction of similar neighbors for agent to be happy (e.g., 0.3) |
-| `max_iters`              | Maximum number of iterations/steps for simulation       |
-| `GROUP_IDS`              | Internal IDs assigned to agent groups starting from 1   |
-
-### Agent Behavior
-
-- Agents inspect neighbors in a **Moore neighborhood** (adjacent 8 cells).
-- Calculate fraction of neighbors belonging to the same group.
-- If fraction < `tolerance`, agent is unhappy and moves to a random empty cell.
-- Otherwise, agent stays put.
+| Parameter       | Description                                                  | Example       |
+|-----------------|--------------------------------------------------------------|---------------|
+| `grid_size`     | Dimension of the square grid (number of cells per side)      | 50            |
+| `populations`   | Relative proportions of agents per group (must sum ≤ 1)      | `[0.3, 0.5, 0.2]` |
+| `EMPTY`         | Integer representing an empty cell                           | `0`           |
+| `tolerance`     | Minimum fraction of similar neighbors for agent satisfaction | `0.3`         |
+| `max_iters`     | Maximum simulation iterations                                 | 200           |
 
 ---
 
+## Usage
+
+### Prerequisites
+
+- Python 3.7+
+- Required packages: numpy, matplotlib
+
 ## How to Run
 
-1. Clone this repository:
+Clone this repository:
 
 ```bash
 git clone https://github.com/FarshadAmiri/ComplexSystems_playground/
