@@ -61,3 +61,4 @@ Clone this repository:
 ```bash
 git clone https://github.com/FarshadAmiri/ComplexSystems_playground/
 cd schelling-abm
+python run.py
