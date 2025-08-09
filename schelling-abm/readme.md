@@ -8,8 +8,6 @@ Agents representing different groups occupy cells on a grid, each evaluating the
 
 ![Schelling’s Segregation](schelling_sim.gif)
 
----
-
 ## Key Concepts
 
 ### Generative Agent-Based Modeling
@@ -24,7 +22,6 @@ Agents representing different groups occupy cells on a grid, each evaluating the
 - Even modest preferences for similar neighbors can result in significant clustering.
 - The model underscores how segregation can arise without explicit discriminatory intent.
 
----
 
 ## Model Description
 
@@ -49,7 +46,6 @@ Agents representing different groups occupy cells on a grid, each evaluating the
 | `tolerance`     | Minimum fraction of similar neighbors for agent satisfaction | `0.3`         |
 | `max_iters`     | Maximum simulation iterations                                 | 200           |
 
----
 
 ## Usage
 
