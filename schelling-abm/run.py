@@ -4,16 +4,40 @@ import matplotlib.animation as animation
 import matplotlib.colors as mcolors
 
 # Parameters
+# ==================================================================
+# Simulation Configuration
+
+# Grid size
+# The simulation grid is square: grid_size × grid_size cells.
 grid_size = 50
-populations = [0.3, 0.3, ]  # what remains from 1.0 will be empty cells
-# First color denotes empty cells, the rest denotes the groups respectively
-colors = ['white', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta']  
-tolerance = 0.4
+
+# Relative population fractions for each agent group.
+# - Each value is a fraction of the total grid (0.0 to 1.0).
+# - Values must sum to ≤ 1.0. Remaining fraction will be empty cells.
+# - You can define as many groups as you like by adding more values.
+# Example: [0.3, 0.4, 0.2] → 30% Group 1, 40% Group 2, 20% Group 3, and 10% empty.
+populations = [0.15, 0.45]
+
+# Colors assigned to each category in the simulation.
+# - The FIRST color is reserved for empty cells.
+# - Remaining colors correspond to groups in the same order as in `populations`.
+# - Must include at least len(populations) + 1 colors.
+# Colors can be any Matplotlib-recognized name or hex code (e.g., "#FF0000").
+colors = ['white', 'red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'magenta']
+
+# Agent satisfaction tolerance.
+# - Fraction of neighbors that must be of the same group for an agent to be "happy" and try not to relocate.
+# - Range: 0.0 (very tolerant) to 1.0 (very intolerant).
+# - Higher values → stronger segregation.
+tolerance = 0.6
+
+# Maximum number of simulation iterations before stopping.
 max_iters = 500
+# ==================================================================
+
 
 EMPTY = 0
 GROUP_IDS = list(range(1, len(populations) + 1))
-
 
 def initialize_grid(size, populations):
     total_cells = size * size

@@ -41,7 +41,7 @@ Agents representing different groups occupy cells on a grid, each evaluating the
 | Parameter       | Description                                                  | Example       |
 |-----------------|--------------------------------------------------------------|---------------|
 | `grid_size`     | Dimension of the square grid (number of cells per side)      | 50            |
-| `populations`   | Relative proportions of agents per group (must sum ≤ 1)      | `[0.3, 0.5, 0.2]` |
+| `populations`   | Relative proportions of agents per group (must sum ≤ 1)      | `[0.2, 0.25, 0.3]` |
 | `EMPTY`         | Integer representing an empty cell                           | `0`           |
 | `tolerance`     | Minimum fraction of similar neighbors for agent satisfaction | `0.3`         |
 | `max_iters`     | Maximum simulation iterations                                 | 200           |
