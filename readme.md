@@ -5,8 +5,6 @@ Each subfolder contains an independent simulation with its own configuration and
 
 ## Contents
 - **Schelling Segregation Model** – How local preferences create large-scale patterns.
-- **Cellular Automata** – Simple rules, complex behavior.
-- More experiments coming soon.
 
 ## Requirements
 Python 3.7+ and dependencies:
