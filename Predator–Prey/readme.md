@@ -1,0 +1,54 @@
+# Predator-Prey Simulation with Agent-Based Modeling
+
+This repository contains a modular, object-oriented predator-prey simulation implemented in Python. It models the interactions of two species—predators and prey—on a 2D toroidal grid using agent-based modeling (ABM) principles. The simulation provides real-time visualization of complex emergent behaviors such as population dynamics, hunting, reproduction, and starvation.
+
+---
+
+## Overview
+
+Agent-Based Modeling (ABM) is a powerful computational approach to simulate complex systems composed of interacting autonomous agents. This predator-prey simulation demonstrates how simple local behaviors of individual agents can give rise to complex population-level dynamics over time.
+
+### Key Features
+
+- **Modular, Object-Oriented Design:** Separate classes for `Agent`, `Prey`, `Predator`, and `Environment` ensure code clarity, extensibility, and maintainability.
+- **Toroidal Grid:** The 2D grid "wraps around" edges, modeling an unbounded continuous space.
+- **Predator Hunting:** Predators search for prey within a configurable Manhattan radius and consume prey to survive.
+- **Reproduction:** Both prey and predators can reproduce with user-configurable probabilities.
+- **Starvation:** Predators have limited hunger capacity and die if they fail to eat within a given time.
+- **Real-Time Visualization:** The simulation displays the grid dynamically using `matplotlib`, with distinct colors representing empty cells, prey, and predators.
+
+---
+
+## Simulation Components
+
+### Agents
+
+- **Prey:** Move randomly to adjacent empty cells; reproduce probabilistically.
+- **Predators:** Hunt prey within a configurable radius; move, reproduce, and starve if unsuccessful at hunting.
+
+### Environment
+
+- Manages the grid state and agent positions.
+- Provides neighbor queries for movement and hunting.
+- Handles agent placement, removal, and movements, ensuring no conflicting updates.
+
+### Simulation
+
+- Coordinates the simulation loop.
+- Updates agents in randomized order to avoid bias.
+- Visualizes the system state at each timestep.
+
+---
+
+## Usage
+
+### Requirements
+
+- Python 3.7+
+- `numpy`
+- `matplotlib`
+
+Install dependencies via pip if needed:
+
+```bash
+pip install numpy matplotlib
