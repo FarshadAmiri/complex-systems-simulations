@@ -1,4 +1,4 @@
-# Schelling’s Segregation Model — A Generative Agent-Based Simulation
+# Schelling’s Segregation Model
 
 ## Overview
 
