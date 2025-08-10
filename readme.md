@@ -1,6 +1,6 @@
 # 🧩 Complex Systems Simulations
 
-Welcome to a curated collection of **complex systems** and **agent-based modeling (ABM)** projects — a sandbox for exploring emergent phenomena, dynamical behaviors, and foundational computational models.  
+This is a curated collection of **complex systems** and **agent-based modeling (ABM)** projects — a sandbox for exploring emergent phenomena, dynamical behaviors, and foundational computational models.  
 Each subfolder hosts a standalone simulation with code, configuration and visualization.
 
 
