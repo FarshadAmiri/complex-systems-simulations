@@ -41,6 +41,14 @@ This is an agent-based simulation, so you’ll see predators and prey moving, ea
 # - add a random prey/predator genration at each step
 
 
+# Parameters
+grid_size=50
+num_predators=50
+num_prey=400
+max_iters=200
+delay=0.1
+
+
 
 # Constants for cell states
 EMPTY = 0
@@ -204,9 +212,18 @@ class Simulation:
             plt.draw()
             plt.pause(self.delay)
 
+            # Termination check: stop if no prey or predators remain
+            prey_count = sum(isinstance(agent, Prey) for agent in self.env.agents)
+            predator_count = sum(isinstance(agent, Predator) for agent in self.env.agents)
+
+            if prey_count == 0 or predator_count == 0:
+                print(f"Simulation ended at step {step} — Prey: {prey_count}, Predators: {predator_count}")
+                plt.close()
+                break
+
         plt.ioff()
         plt.show()
 
 if __name__ == "__main__":
-    sim = Simulation()
+    sim = Simulation(grid_size, num_prey, num_predators, max_iters, delay)
     sim.run()
