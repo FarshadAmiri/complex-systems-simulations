@@ -9,9 +9,9 @@ Each subfolder hosts a standalone simulation with code, configuration and visual
 
 | Project                                                                 | Description                                         |
 |-------------------------------------------------------------------------|-----------------------------------------------------|
-| 🏘️ [*Schelling Segregation Model*](https://github.com/FarshadAmiri/complex-systems-simulations/tree/main/schelling-abm) | Demonstrates how individual local preferences lead to emergent large-scale spatial segregation patterns. |
-| 🦌 [*Predator-Prey Simulation*](https://github.com/FarshadAmiri/complex-systems-simulations/tree/main/predator-prey)     | Models dynamic interactions between predators and prey, showcasing population oscillations and spatial complexity. |
-| 🎲 [*Conway's Game of Life*](https://github.com/FarshadAmiri/complex-systems-simulations/tree/main/conway-game-of-life)          | Classic 2D cellular automaton illustrating how simple rules produce complex emergent behavior. |
+| 🏘️ [**Schelling Segregation**](https://github.com/FarshadAmiri/complex-systems-simulations/tree/main/schelling-abm) | Demonstrates how individual local preferences lead to emergent large-scale spatial segregation patterns. |
+| 🦌 [**Predator-Prey**](https://github.com/FarshadAmiri/complex-systems-simulations/tree/main/predator-prey)     | Models dynamic interactions between predators and prey, showcasing population oscillations and spatial complexity. |
+| 🎲 [**Conway's Game of Life**](https://github.com/FarshadAmiri/complex-systems-simulations/tree/main/conway-game-of-life)          | Classic 2D cellular automaton illustrating how simple rules produce complex emergent behavior. |
 
 
 
