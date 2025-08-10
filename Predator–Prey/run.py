@@ -44,7 +44,7 @@ predator_reproduce_prob = 0.05     # 0.05
 predator_starve_time = 20      # 20
 predator_hunting_radius = 2    # 2
 max_iters = 10000
-delay = 0.04
+delay = 0.08
 
 # ==== Constants for cell states ====
 EMPTY = 0
