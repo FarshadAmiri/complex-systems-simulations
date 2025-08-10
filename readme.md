@@ -6,4 +6,5 @@ Each subfolder contains an independent simulation with its own configuration and
 ## Simulations
 - **Schelling Segregation Model** – How local preferences create large-scale patterns.
 - **Predator-Prey Simulation** – Predator–Prey dynamic complex system simulation.
+- **Cellular Automata - Conway's Game of Life** – A popular 2D CA.
 

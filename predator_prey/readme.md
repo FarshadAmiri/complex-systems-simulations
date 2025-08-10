@@ -55,6 +55,8 @@ Updates:
 * If multiple prey are in range, predator picks one randomly.
 
 
+## Usage
+
 ### Prerequisites
 
 - Python 3.7+
