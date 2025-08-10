@@ -32,13 +32,14 @@ The cellular automaton evolves over discrete time steps based on local rules app
 4. **Boundary Conditions:**  
    The grid can be configured to *wrap around* edges (toroidal), making the top and bottom, left and right edges adjacent. Alternatively, boundaries can be treated as fixed (cells outside the grid are considered dead).
 
-5. **Iteration:**  
-   At each simulation step:  
-   - The entire grid is evaluated simultaneously to compute the next generation.  
-   - Updates are applied to produce a new grid state.
+### Convay's Game of Life:
 
-6. **Visualization:**  
-   The current state of the grid is rendered in real-time using Matplotlib, with alive cells shown in black and dead cells in white (configurable).
+In the 1970s a two-state, two-dimensional cellular automaton named **Game of Life** became widely known, particularly among the early computing community. Invented by John Conway and popularized by Martin Gardner in a Scientific American article, its rules are as follows:
+
+- Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
+- Any live cell with two or three live neighbours lives on to the next generation.
+- Any live cell with more than three live neighbours dies, as if by overpopulation.
+- Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 
 ### Features

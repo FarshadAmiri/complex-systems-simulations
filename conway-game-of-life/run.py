@@ -1,10 +1,5 @@
-#!/usr/bin/env python3
 """
-cellular_automaton.py
-
 A flexible life-like cellular automaton with real-time visualization.
-
-Author: (you)
 """
 
 import numpy as np
@@ -12,23 +7,18 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import random
 
-# -------------------------
-# Configuration (tweakable)
-# -------------------------
-grid_size = 100              # grid is grid_size x grid_size
-init_mode = "random"         # "random", "glider", "blinker", or "custom"
-init_density = 0.15          # used for random init: proportion of ON cells
-rule_b = [3]                 # birth counts (B)
-rule_s = [2, 3]              # survival counts (S)
+# --------------------------
+# Configuration
+# --------------------------
+grid_size = 50             # grid is grid_size x grid_size | Default: 100
+init_mode = "random"         # "random", "glider", "blinker", or "custom_1"
+init_density = 0.15          # used for random init: proportion of ON cells | Default: 0.15
+rule_b = [2,]                 # birth counts (B)| Default: [3]
+rule_s = [1, 2, 3]              # survival counts (S) | Default: [2, 3]
 max_iters = 1000
-delay = 0.05                 # seconds between frames
+delay = 0.2                  # seconds between frames
 wrap = True                  # toroidal boundaries if True
 
-# Optional frame saving (uncomment to enable)
-# save_frames = True
-# frame_folder = "frames_ca"
-# import os
-# os.makedirs(frame_folder, exist_ok=True)
 
 # -------------------------
 # Helper: preset patterns
@@ -111,7 +101,7 @@ def initialize_grid(mode, N, density):
         add_glider(grid, (1, 1))
     elif mode == "blinker":
         add_blinker(grid, (N//2, N//2))
-    elif mode == "custom":
+    elif mode == "custom_1":
         # place some gliders and blinkers for demo
         add_glider(grid, (2, 2))
         add_glider(grid, (20, 10))
@@ -150,7 +140,7 @@ def run_ca(grid, Bset, Sset, max_iters=200, delay=0.1, wrap=True):
     plt.show()
 
 # -------------------------
-# Main
+# Run
 # -------------------------
 if __name__ == "__main__":
     Bset, Sset = parse_rule(rule_b, rule_s)
