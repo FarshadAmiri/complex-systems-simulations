@@ -42,14 +42,6 @@ In the 1970s a two-state, two-dimensional cellular automaton named **Game of Lif
 - Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 
-### Features
-
-- **Rule Flexibility:** Easily specify birth and survival conditions to simulate various life-like cellular automata.
-- **Pattern Initialization:** Quickly start simulations with common patterns like gliders or oscillators, or with randomized initial states.
-- **Toroidal Grid:** The simulation grid “wraps around” edges to emulate infinite plane behavior.
-- **Real-Time Visualization:** Watch the system evolve over time with smooth, step-by-step rendering.
-- **Extensible Design:** The codebase is clear and modular, making it straightforward to extend with new features or patterns.
-
 ## Usage
 
 ### Prerequisites

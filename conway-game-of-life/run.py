@@ -1,23 +1,47 @@
 """
 A flexible life-like cellular automaton with real-time visualization.
+
+Neighborhood:
+Each cell’s fate depends on its 8 neighboring cells (Moore neighborhood), including diagonals.
+
+Rules:
+Birth (B): A dead cell becomes alive if the number of alive neighbors matches any number in the birth list.
+Survival (S): A living cell remains alive if the number of alive neighbors matches any number in the survival list. Otherwise, it dies.
+
+Boundary Conditions:
+It's toroidal (wrap-around).
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import random
+from interesting_configs import *
 
 # --------------------------
 # Configuration
 # --------------------------
-grid_size = 50             # grid is grid_size x grid_size | Default: 100
-init_mode = "random"         # "random", "glider", "blinker", or "custom_1"
-init_density = 0.15          # used for random init: proportion of ON cells | Default: 0.15
-rule_b = [2,]                 # birth counts (B)| Default: [3]
-rule_s = [1, 2, 3]              # survival counts (S) | Default: [2, 3]
-max_iters = 1000
-delay = 0.2                  # seconds between frames
-wrap = True                  # toroidal boundaries if True
+# config sets are: classic_life, maze_like, highlife, day_and_night, seeds, coral_growth, amoeba, two_by_two
+params = maze_like  # Select the configuration set
+
+grid_size = params["grid_size"]
+init_mode = params["init_mode"]
+init_density = params["init_density"]
+rule_b = params["rule_b"]
+rule_s = params["rule_s"]
+max_iters = params["max_iters"]
+delay = params["delay"]
+wrap = params["wrap"]
+
+# Or any other custom configuration | test and tweak 
+# grid_size = 50             # grid is grid_size x grid_size | Default: 100
+# init_mode = "random"       # "random", "glider", "blinker", or "custom_1"
+# init_density = 0.15        # used for random init: proportion of ON cells | Default: 0.15
+# rule_b = [2,]              # birth counts (B)| Default: [3]
+# rule_s = [1, 2, 3]         # survival counts (S) | Default: [2, 3]
+# max_iters = 1000
+# delay = 0.2                # seconds between frames
+# wrap = True                # toroidal boundaries if True
 
 
 # -------------------------
@@ -130,6 +154,10 @@ def run_ca(grid, Bset, Sset, max_iters=200, delay=0.1, wrap=True):
         ax.set_title(f"CA — B{sorted(Bset)}/S{sorted(Sset)} — step {t+1}")
         plt.draw()
         plt.pause(delay)
+
+        if not plt.fignum_exists(fig.number):  # <- check if window is closed
+            print("Figure closed — stopping simulation.")
+            break
 
         # optional frame saving
         # if save_frames:
