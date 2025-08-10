@@ -59,6 +59,6 @@ Agents representing different groups occupy cells on a grid, each evaluating the
 Clone this repository:
 
 ```bash
-git clone https://github.com/FarshadAmiri/ComplexSystems_playground/
+git clone https://github.com/FarshadAmiri/complex-systems_simulations/
 cd schelling-abm
 python run.py

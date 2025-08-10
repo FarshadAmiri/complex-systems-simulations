@@ -36,16 +36,33 @@ Agent-Based Modeling (ABM) is a powerful computational approach to simulate comp
 - Updates agents in randomized order to avoid bias.
 - Visualizes the system state at each timestep.
 
+How it works:
+* Prey move randomly and reproduce with a set probability.
+* Predators seek prey in adjacent cells.
+* If they find prey (within a specific radius of adjacent cells) → they eat it, reset hunger, and may reproduce.
+* If they don’t eat → hunger decreases until they starve and die.
+* If predator eats prey in a step: hunger resets to max (starve time), because it just fed.
+* If predator does NOT eat in a step: hunger decreases by 1 (getting hungrier).
+* When hunger reaches zero → predator dies.
+* Predators move only once per step.
+* Toroidal grid — edges wrap around so agents reappear on the opposite side.
+* Visualization updates every iteration so you can watch the dynamics unfold.
 
-## Usage
+- Updates:
+* Predators move directly onto prey cells to eat.
+* If multiple prey are in range, predator picks one randomly.
 
-### Requirements
+
+### Prerequisites
 
 - Python 3.7+
-- `numpy`
-- `matplotlib`
+- Required packages: numpy, matplotlib
 
-Install dependencies via pip if needed:
+### How to Run
+
+Clone this repository:
 
 ```bash
-pip install numpy matplotlib
+git clone https://github.com/FarshadAmiri/complex-systems_simulations/
+cd predator_prey
+python run.py
