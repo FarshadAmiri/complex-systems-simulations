@@ -1,4 +1,4 @@
-# Cellular Automaton Simulator (Conway's Game of Life)
+# Conway's Game of Life (A Cellular Automaton Simulator)
 
 A flexible and extensible Python implementation of life-like cellular automata, featuring real-time visualization and customizable rules.
 
@@ -63,5 +63,5 @@ Clone this repository:
 
 ```bash
 git clone https://github.com/FarshadAmiri/complex-systems_simulations/
-cd predator_prey
+cd conway-game-of-life
 python run.py
