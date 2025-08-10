@@ -50,7 +50,7 @@ Agent-Based Modeling (ABM) is a powerful computational approach to simulate comp
 * Toroidal grid — edges wrap around so agents reappear on the opposite side.
 * Visualization updates every iteration so you can watch the dynamics unfold.
 
-- Updates:
+Updates:
 * Predators move directly onto prey cells to eat.
 * If multiple prey are in range, predator picks one randomly.
 
