@@ -5,7 +5,7 @@ Each subfolder hosts a standalone simulation with code, configuration and visual
 
 
 
-## 🚀 Project Navigator
+## Project Navigator
 
 | Project                                                                 | Description                                         |
 |-------------------------------------------------------------------------|-----------------------------------------------------|
@@ -16,4 +16,4 @@ Each subfolder hosts a standalone simulation with code, configuration and visual
 
 
 Explore each project for detailed explanations, source code, and real-time visualizations.  
-Contributions and suggestions are welcome! 🛠️✨
+Contributions and suggestions are welcome! ✨
