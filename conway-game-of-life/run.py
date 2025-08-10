@@ -33,7 +33,7 @@ max_iters = params["max_iters"]
 delay = params["delay"]
 wrap = params["wrap"]
 
-# Or any other custom configuration | test and tweak 
+""" Or any other custom configuration | test and tweak """
 # grid_size = 50             # grid is grid_size x grid_size | Default: 100
 # init_mode = "random"       # "random", "glider", "blinker", or "custom_1"
 # init_density = 0.15        # used for random init: proportion of ON cells | Default: 0.15
