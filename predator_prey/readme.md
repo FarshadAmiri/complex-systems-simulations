@@ -24,6 +24,7 @@ Agent-Based Modeling (ABM) is a powerful computational approach to simulate comp
 - **Prey:** Move randomly to adjacent empty cells; reproduce probabilistically.
 - **Predators:** Hunt prey within a configurable radius; move, reproduce, and starve if unsuccessful at hunting.
 
+
 ### Environment
 
 - Manages the grid state and agent positions.
@@ -36,7 +37,8 @@ Agent-Based Modeling (ABM) is a powerful computational approach to simulate comp
 - Updates agents in randomized order to avoid bias.
 - Visualizes the system state at each timestep.
 
-How it works:
+
+## How it works:
 * Prey move randomly and reproduce with a set probability.
 * Predators seek prey in adjacent cells.
 * If they find prey (within a specific radius of adjacent cells) → they eat it, reset hunger, and may reproduce.
@@ -57,6 +59,7 @@ How it works:
 
 - Python 3.7+
 - Required packages: numpy, matplotlib
+
 
 ### How to Run
 
