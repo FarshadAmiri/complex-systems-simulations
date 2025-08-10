@@ -37,13 +37,13 @@ How it works:
 
 # ==== Parameters ====
 grid_size = 50   # 50
-num_predators = 50   # 50
+num_predators = 40   # 50
 num_prey = 400    # 400
-prey_reproduce_prob = 0.15     # 0.1
+prey_reproduce_prob = 0.1     # 0.1
 predator_reproduce_prob = 0.05     # 0.05
-predator_starve_time = 20      # 20
+predator_starve_time = 7      # 20
 predator_hunting_radius = 2    # 2
-max_iters = 10000
+max_iters = 1000
 delay = 0.08
 
 # ==== Constants for cell states ====
