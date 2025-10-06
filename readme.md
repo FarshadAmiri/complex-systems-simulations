@@ -3,23 +3,7 @@
 This is a curated collection of **complex systems** and **agent-based modeling (ABM)** projects — a sandbox for exploring emergent phenomena, dynamical behaviors, and foundational computational models.  
 Each subfolder hosts a standalone simulation with code, configuration and visualization.
 
-## Focus Areas
-
-This repository covers several key domains of complex systems:
-
-### 🧠 **Human Behavior & Social Dynamics**
-Advanced simulations of human interactions, learning, and adaptation featuring:
-- Individual agents with characteristic sets that influence behavior
-- Environmental adaptation through learning and exploration  
-- Cultural evolution and knowledge transmission
-- Dynamic social networks and collaborative intelligence
-
-### 🔄 **Classical Complex Systems**
-Foundational models demonstrating core principles:
-- Spatial segregation and preference-based clustering
-- Population dynamics and ecological interactions
-- Cellular automata and emergent complexity
-
+This repository covers several domains of complex systems.
 
 
 ## Project Navigator
