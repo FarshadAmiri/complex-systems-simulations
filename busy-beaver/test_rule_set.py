@@ -1,12 +1,22 @@
 import random
+from pprint import pprint
 
+# -------- Inputs --------
 n = 2
-iters = 50000
 max_steps_to_halt = 100
 
 initial_tape = ["0"]
 initial_head_idx = 0
 initial_mode = "a"
+
+rules_set = {
+        ('a', '0'): ['1', 'l', 'b'],
+        ('a', '1'): ['0', 'r', 'b'],
+        ('b', '0'): ['1', 'r', 'a'],
+        ('b', '1'): ['0', 'l', 'halt']
+ }
+
+# ------ END of Inputs ------
 
 write_set = ["0", "1"]
 move_set = ["l", "r"]
@@ -49,23 +59,12 @@ def simulate_turing_machine(rules_set, tape, head_idx, mode):
 
     return (tape, head_idx, mode)
 
-
-max_score = 0
-max_shifts = 0
-
 tape = initial_tape.copy()
 head_idx = initial_head_idx
 mode = initial_mode
 score = 0
 shifts = 0
 tape_history = []
-
-rules_set = {
-        ('a', '0'): ['1', 'l', 'b'],
-        ('a', '1'): ['0', 'r', 'b'],
-        ('b', '0'): ['1', 'r', 'a'],
-        ('b', '1'): ['0', 'l', 'halt']
- }
 
 for i in range(max_steps_to_halt):
     new_tape = tape.copy()
@@ -76,16 +75,11 @@ for i in range(max_steps_to_halt):
     shifts = i+1
 
     if mode == "halt":
-        if score > max_score:
-            max_score = score
-            print(f"score: {score}")
-
-        if shifts > max_shifts:
-            max_shifts = shifts
-            best_rules = rules_set
-            best_tape = tape_history
-            print(f"shift: {shifts}")
-        
+        new_tape = tape.copy()
+        tape_history.append(new_tape)
+        print(f"Ones score: {score}")
+        print(f"Steps: {shifts}\n")        
         break
 
-tape_history
+
+pprint(tape_history)
