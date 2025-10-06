@@ -1,4 +1,4 @@
-# Busy Beaver Random Search
+# Busy Beaver
 
 This notebook (`bb.ipynb`) performs a Monte Carlo search over small 2‑symbol Turing machines to find candidates that maximize either (a) number of 1s written on halt (Σ-like) or (b) steps executed before halting (S-like).
 
@@ -41,6 +41,4 @@ Algorithm (per candidate):
 
 ### Potential extensions (future works):
 - Cycle detection (hash of (mode, head, tape_tuple)).
-- Persist champions (JSON) + metadata; add seeding CLI.
 - Parallel sampling + symmetry/canonical pruning.
-- Exhaustive mode for very small n to validate correctness.
